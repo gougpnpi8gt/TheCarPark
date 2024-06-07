@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая машина</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/cars}" th:object="${car}">
+    <label for="dateCreation">Введите дату сборки: </label>
+    <input type="text" th:field="*{dateCreation}" id="dateCreation"/>
+    <div style="color:red" th:if="${#fields.hasErrors('dateCreation')}" th:errors="*{dateCreation}">Date creation Error</div>
+    <br/>
+    <input type="submit" value="Создать машину!"/>
+</form>
+
+</body>
+</html>

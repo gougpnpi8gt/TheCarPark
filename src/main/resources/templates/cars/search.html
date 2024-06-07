@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/cars/search}">
+    <label for="query">Введите поисковой запрос: </label>
+    <input type="text" name="query" id="query" />
+    <br/>
+    <input type="submit" value="Искать!"/>
+</form>
+<div th:if="${cars.isEmpty()}">
+    <span>Машин не найдено</span>
+</div>
+<div th:if="${!cars.isEmpty()}">
+    <div th:each="car : ${cars}">
+        <a th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}">book</a>
+        <div th:if="${car.getPerson() == null}">
+            <span>Нет владельца</span>
+            <hr/>
+        </div>
+        <div th:if="${car.getPerson() != null}">
+            <span>Владелец: </span> <span th:text="${car.getPerson().getFullName()}">Person name</span>
+            <hr/>
+        </div>
+    </div>
+</div>
+<a href="/park/cars">Назад</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+</head>
+<body>
+
+<div th:each="car : ${cars}">
+    <a th:href="@{/car/{id}(id=${car.getUniqueNumber()})}"
+       th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}">book</a>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/park/cars/new">Добавить машину</a>
+<br/>
+<a href="/park/cars/search">Найти владельца</a>
+<br/>
+<a href="/park/cars">Назад</a>
+</body>
+</html>

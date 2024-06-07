@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница машины</title>
+</head>
+<body>
+<p th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}">book</p>
+<div th:if="${owner}">
+    <span> Машина сейчас у владельца: </span> <span th:text="${owner.getFullName()}">Person name</span>
+    <form th:method="PATCH" th:action="@{/cars/{id}/release(id=${car.getUniqueNumber()})}">
+        <input type="submit" value="Освободить машину">
+    </form>
+</div>
+
+<div th:if="${people}">
+    <span> Эта машина не куплена, кому ее продать? </span>
+    <form th:method="PATCH" th:action="@{/cars/{id}/choose(id=${car.getUniqueNumber()})}">
+        <label for="PersonCar">Выберите человека: </label>
+        <select th:object="${person}" th:field="*{id}" id="PersonCar">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+            </option>
+        </select>
+        <input type="submit" value="Назначить машине владельца">
+    </form>
+</div>
+
+
+<hr/>
+<form th:method="GET"  th:action="@{/cars/{id}/edit(id=${car.getUniqueNumber()})}">
+    <input type="submit" value="Редактировать"/>
+</form>
+<form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getUniqueNumber()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+<form th:method="GET" th:action="@{/cars}">
+    <input type="submit" value="Вернуться в меню машин"/>
+</form>
+</body>
+</html>

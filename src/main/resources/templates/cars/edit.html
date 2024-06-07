@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование параметров машины</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/cars/{id}(id=${car.getUniqueNumber()})}" th:object="${car}">
+    <label for="dateCreation">Введите дату: </label>
+    <input type="text" th:field="*{dateCreation}" id="dateCreation"/>
+    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Date creation Error</div>
+    <br/>
+    <input type="submit" value="Редактировать!"/>
+</form>
+</body>
+</html>
