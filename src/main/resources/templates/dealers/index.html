@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница дилера</title>
+</head>
+<body>
+
+<div th:each="dealer : ${dealers}">
+    <a th:href="@{/park/dealers/{id}(id=${dealer.getId()})}"
+       th:text="${dealer.getTitle() + ', ' + dealer.getFullNameRepresentative() + ', '  + dealer.getEmail()}">Dealer</a>
+</div>
+<br/>
+<hr/>
+<a href="/park/dealers/new">Добавить дилера</a>
+<br/>
+<a href="/park">Назад</a>
+</body>
+</html>

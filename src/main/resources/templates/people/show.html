@@ -6,21 +6,31 @@
 </head>
 <body>
 
-<p th:text="${person.getFullName() + ', ' +  person.getEmail() + ', ' + person.getPhone() }">VALUE</p>
-<div th:if="${cars.isEmpty()}">
-    <p>У пользователя нет купленных машин</p>
+<p th:text="${person.getFullName()}">VALUE</p>
+<p th:text="${person.getEmail()}">VALUE</p>
+<p th:text="${ person.getPhone()}">VALUE</p>
+<div th:if="${cars}">
+    <span> У этого владельца нет машин, назначить машину? </span>
+    <form th:method="PATCH" th:action="@{/park/persons/{id}/choose(id=${person.getId()})}">
+        <label for="carPerson">Выберите машину по уникальному номеру: </label>
+        <select th:object="${car}" th:field="*{id}" id="carPerson">
+            <option th:each="car : ${cars}" th:value="${car.getId()}" th:text="${car.getUniqueNumber()}">
+            </option>
+        </select>
+        <input type="submit" value="Назначить машину">
+    </form>
     <hr/>
 </div>
-<div th:if="${!cars.isEmpty()}">
+<div th:if="${carsOwner}">
     <hr/>
-    <b>Машины:</b>
+    <b>Машины человека:</b>
     <br/>
     <table th:each="car : ${cars}">
         <tr>
             <td>
                 <span th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}"
-                      th:style="${car.isDelay()} ? 'color: red' : 'color: black'">
-                    book
+                      >
+                    car
                 </span>
             </td>
         </tr>
@@ -29,13 +39,13 @@
 </div>
 
 
-<form th:method="GET" th:action="@{/persons/{id}/edit(id=${person.getId()})}">
-    <input type="submit" value="Редактировать"/>
+<form th:method="GET" th:action="@{/park/persons/{id}/edit(id=${person.getId()})}">
+    <input type="submit" value="Редактировать поля владельца"/>
 </form>
-<form th:method="DELETE" th:action="@{/persons/{id}(id=${person.getId()})}">
-    <input type="submit" value="Удалить"/>
+<form th:method="DELETE" th:action="@{/park/persons/{id}(id=${person.getId()})}">
+    <input type="submit" value="Удалить владельца"/>
 </form>
-<form th:method="GET" th:action="@{/persons}">
+<form th:method="GET" th:action="@{/park/persons}">
     <input type="submit" value="Вернуться к списку владельцев машин"/>
 </form>
 

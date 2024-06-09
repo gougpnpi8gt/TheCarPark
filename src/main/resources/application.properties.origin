@@ -1,3 +1,4 @@
+spring.application.name=TheCarPark
 # Data Source
 spring.datasource.driver-class-name=org.postgresql.Driver
 spring.datasource.url=jdbc:postgresql://

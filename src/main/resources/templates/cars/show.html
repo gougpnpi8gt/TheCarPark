@@ -5,35 +5,33 @@
     <title>Страница машины</title>
 </head>
 <body>
-<p th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}">book</p>
+<p th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}">car</p>
 <div th:if="${owner}">
     <span> Машина сейчас у владельца: </span> <span th:text="${owner.getFullName()}">Person name</span>
-    <form th:method="PATCH" th:action="@{/cars/{id}/release(id=${car.getUniqueNumber()})}">
+    <form th:method="PATCH" th:action="@{/park/cars/{id}/release(id=${car.getId()})}">
         <input type="submit" value="Освободить машину">
     </form>
 </div>
 
 <div th:if="${people}">
-    <span> Эта машина не куплена, кому ее продать? </span>
-    <form th:method="PATCH" th:action="@{/cars/{id}/choose(id=${car.getUniqueNumber()})}">
-        <label for="PersonCar">Выберите человека: </label>
-        <select th:object="${person}" th:field="*{id}" id="PersonCar">
+    <span> У этой машины нет владельца, кому её назначить? </span>
+    <form th:method="PATCH" th:action="@{/park/cars/{id}/choose(id=${car.getId()})}">
+        <label for="carPerson">Выберите человека </label>
+        <select th:object="${person}" th:field="*{id}" id="carPerson">
             <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
             </option>
         </select>
-        <input type="submit" value="Назначить машине владельца">
+        <input type="submit" value="Назначить книгу">
     </form>
 </div>
-
-
 <hr/>
-<form th:method="GET"  th:action="@{/cars/{id}/edit(id=${car.getUniqueNumber()})}">
+<form th:method="GET"  th:action="@{/park/cars/{id}/edit(id=${car.getId()})}">
     <input type="submit" value="Редактировать"/>
 </form>
-<form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getUniqueNumber()})}">
+<form th:method="DELETE" th:action="@{/park/cars/{id}(id=${car.getId()})}">
     <input type="submit" value="Удалить"/>
 </form>
-<form th:method="GET" th:action="@{/cars}">
+<form th:method="GET" th:action="@{/park/cars}">
     <input type="submit" value="Вернуться в меню машин"/>
 </form>
 </body>

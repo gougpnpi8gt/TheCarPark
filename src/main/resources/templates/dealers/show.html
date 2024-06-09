@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница дилера</title>
+</head>
+<body>
+<p th:text="${dealer.getTitle() + ', ' + dealer.getFullNameRepresentative() + ', '  + dealer.getEmail()}">dealer</p>
+<div th:each="person : ${people}">
+    <a th:href="@{/park/persons/{id}(id=${person.getId()})}"
+       th:text="${person.getFullName() + ', ' + person.getCars()}"
+    >person</a>
+</div>
+<hr/>
+<form th:method="GET"  th:action="@{/park/dealers/{id}/edit(id=${dealer.getId()})}">
+    <input type="submit" value="Редактировать"/>
+</form>
+<form th:method="DELETE" th:action="@{/park/dealers/{id}(id=${dealer.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+<form th:method="GET" th:action="@{/park/dealers}">
+    <input type="submit" value="Вернуться в меню"/>
+</form>
+</body>
+</html>
