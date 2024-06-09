@@ -53,7 +53,7 @@ public class ServicePerson {
         Person person = findPersonById(personId);
         person.addCar(car);
         car.setOwner(person);
-        personRepository.save(person);
+        //carsRepository.save(car);
     }
     @Transactional
     public void release(int id) {

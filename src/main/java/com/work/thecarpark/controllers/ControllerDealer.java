@@ -1,6 +1,5 @@
 package com.work.thecarpark.controllers;
 
-import com.work.thecarpark.entity.cars.Car;
 import com.work.thecarpark.entity.dilers.Dealer;
 import com.work.thecarpark.entity.persons.Person;
 import com.work.thecarpark.service.ServiceDealer;
@@ -46,9 +45,9 @@ public class ControllerDealer {
         model.addAttribute("dealer", serviceDealer.findDealerById(id));
         List<Person> peopleDealer = serviceDealer.findAllPersonsByDealer(id);
         if (!peopleDealer.isEmpty()) {
-            model.addAttribute("personsDealer", peopleDealer);
+            model.addAttribute("persons", peopleDealer);
         } else {
-            model.addAttribute("listPeople", servicePerson.findAllPersons());
+            model.addAttribute("people", servicePerson.findAllPersons());
         }
         return "dealers/show";
     }
@@ -70,10 +69,9 @@ public class ControllerDealer {
         return "redirect:/dealers";
     }
     @PatchMapping("/{id}/choose")
-    public String chooseCarForPerson(@ModelAttribute("person") Person person,
-                                     @PathVariable("id") int id) {
+    public String choosePersonForDealer(@ModelAttribute("person") Person person, @PathVariable("id") int id) {
         serviceDealer.appointPerson(id, person);
-        return "redirect:/dealers/" + id;
+        return STR."redirect:/dealers/\{id}";
     }
 
     @GetMapping("/{id}/edit")

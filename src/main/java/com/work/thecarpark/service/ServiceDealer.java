@@ -35,7 +35,7 @@ public class ServiceDealer {
     }
 
     public List<Person> findAllPersonsByDealer(int id) {
-        return findDealerById(id).getPersons();
+        return dealersRepository.findDealerById(id).getPersons();
     }
 
     public Dealer findDealerById(int id) {
@@ -54,7 +54,7 @@ public class ServiceDealer {
     }
     @Transactional
     public void appointPerson(int dealerId, Person person) {
-        Dealer dealer = dealersRepository.findDealerById(dealerId);
+        Dealer dealer = findDealerById(dealerId);
         dealer.addPerson(person);
         person.setDealer(dealer);
     }

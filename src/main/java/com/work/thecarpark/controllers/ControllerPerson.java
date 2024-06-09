@@ -56,7 +56,7 @@ public class ControllerPerson {
     public String chooseCarForPerson(@ModelAttribute("car") Car car,
                                      @PathVariable("id") int id) {
         servicePerson.appointCar(id, car);
-        return "redirect:/persons/" + id;
+        return STR."redirect:/persons/\{id}";
     }
 
     @GetMapping("/new")
@@ -101,6 +101,6 @@ public class ControllerPerson {
     @PatchMapping("/{id}/release")
     public String releaseDealer(@PathVariable("id") int id){
         servicePerson.release(id);
-        return "redirect:/persons/" + id;
+        return STR."redirect:/persons/\{id}";
     }
 }

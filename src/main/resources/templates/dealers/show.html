@@ -10,12 +10,12 @@
 <p th:text="${dealer.getFullNameRepresentative()}">VALUE</p>
 <p th:text="${dealer.getEmail()}">VALUE</p>
 
-<div th:if="${listPeople}">
-    <span> У этого дилера нет людей, добавить людей? </span>
+<div th:if="${people}">
+    <span> У этого дилера нет владельцев машин, добавить? </span>
     <form th:method="PATCH" th:action="@{/dealers/{id}/choose(id=${dealer.getId()})}">
         <label for="person">Выберите человека по имени: </label>
         <select th:object="${person}" th:field="*{id}" id="person">
-            <option th:each="person : ${listPeople}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
             </option>
         </select>
         <input type="submit" value="Назначить владельца">
@@ -23,11 +23,11 @@
     <hr/>
 </div>
 
-<div th:if="${personsDealer}">
+<div th:if="${persons}">
     <hr/>
     <b>Список владельцев машин у дилера:</b>
     <br/>
-    <div th:each="person : ${personsDealer}">
+    <div th:each="person : ${persons}">
         <a th:href="@{/persons/{id}(id=${person.getId()})}"
            th:text="${person.getFullName() + ', ' + person.getPhone() + ', ' + person.getEmail()}"
         >person</a>
