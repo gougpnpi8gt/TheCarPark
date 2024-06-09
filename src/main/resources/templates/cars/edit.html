@@ -5,10 +5,14 @@
     <title>Редактирование параметров машины</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/park/cars/{id}(id=${car.getId()})}" th:object="${car}">
+<form th:method="PATCH" th:action="@{/cars/{id}(id=${car.getId()})}" th:object="${car}">
     <label for="dateCreation">Введите дату: </label>
     <input type="text" th:field="*{dateCreation}" id="dateCreation"/>
-    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Date creation Error</div>
+    <div style="color:red" th:if="${#fields.hasErrors('dateCreation')}" th:errors="*{dateCreation}">Date creation Error</div>
+    <br/>
+    <label for="uniqueNumber">Введите уникальный номер: </label>
+    <input type="text" th:field="*{uniqueNumber}" id="uniqueNumber"/>
+    <div style="color:red" th:if="${#fields.hasErrors('uniqueNumber')}" th:errors="*{uniqueNumber}">Unique number Error</div>
     <br/>
     <input type="submit" value="Редактировать!"/>
 </form>

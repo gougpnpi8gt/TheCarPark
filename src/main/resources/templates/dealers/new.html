@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/park/dealers}" th:object="${dealer}">
+<form th:method="POST" th:action="@{/dealers}" th:object="${dealer}">
     <label for="title">Введите название: </label>
     <input type="text" th:field="*{title}" id="title"/>
     <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</div>

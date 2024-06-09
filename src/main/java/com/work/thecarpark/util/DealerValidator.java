@@ -1,8 +1,7 @@
 package com.work.thecarpark.util;
 
 import com.work.thecarpark.entity.dilers.Dealer;
-import com.work.thecarpark.entity.persons.Person;
-import com.work.thecarpark.service.ServicePark;
+import com.work.thecarpark.service.ServiceDealer;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,10 @@ import org.springframework.validation.Validator;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DealerValidator implements Validator {
-    final ServicePark servicePark;
+    final ServiceDealer serviceDealer;
     @Autowired
-    public DealerValidator(ServicePark servicePark) {
-        this.servicePark = servicePark;
+    public DealerValidator(ServiceDealer serviceDealer) {
+        this.serviceDealer = serviceDealer;
     }
 
     @Override
@@ -26,7 +25,7 @@ public class DealerValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Dealer dealer = (Dealer) o;
-        if (servicePark.findByFullNameTitle(dealer.getTitle()).isPresent()){
+        if (serviceDealer.findByFullNameTitle(dealer.getTitle()).isPresent()){
             errors.rejectValue("FullNameRepresentative", "", "This fullName is already taken");
         }
     }

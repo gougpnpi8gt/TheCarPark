@@ -5,7 +5,7 @@
     <title>Редактирование дилера</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/park/dealers/{id}(id=${dealer.getId()})}" th:object="${dealer}">
+<form th:method="PATCH" th:action="@{/dealers/{id}(id=${dealer.getId()})}" th:object="${dealer}">
     <label for="title">Введите название: </label>
     <input type="text" th:field="*{title}" id="title"/>
     <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</div>

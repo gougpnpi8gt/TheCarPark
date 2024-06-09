@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Person {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Cascade(value = org.hibernate.annotations.CascadeType.REFRESH)
     Integer id;
 
     @Column(name = "full_name")
@@ -45,7 +47,7 @@ public class Person {
     Dealer dealer;
 
     public void addCar(Car car) {
-        if (car == null) {
+        if (cars == null) {
             cars = new ArrayList<>();
         }
         cars.add(car);
@@ -53,7 +55,7 @@ public class Person {
 
     public void deleteCar(Car car) {
         if (cars != null) {
-            cars.remove(car);
+
         }
     }
 

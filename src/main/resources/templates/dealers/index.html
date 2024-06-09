@@ -7,12 +7,12 @@
 <body>
 
 <div th:each="dealer : ${dealers}">
-    <a th:href="@{/park/dealers/{id}(id=${dealer.getId()})}"
+    <a th:href="@{/dealers/{id}(id=${dealer.getId()})}"
        th:text="${dealer.getTitle() + ', ' + dealer.getFullNameRepresentative() + ', '  + dealer.getEmail()}">Dealer</a>
 </div>
 <br/>
 <hr/>
-<a href="/park/dealers/new">Добавить дилера</a>
+<a href="/dealers/new">Добавить дилера</a>
 <br/>
 <a href="/park">Назад</a>
 </body>

@@ -9,11 +9,42 @@
 <p th:text="${person.getFullName()}">VALUE</p>
 <p th:text="${person.getEmail()}">VALUE</p>
 <p th:text="${ person.getPhone()}">VALUE</p>
+
+<div th:if="${person.getDealer() != null}">
+    <form th:method="PATCH" th:action="@{/persons/{id}/release(id=${person.getId()})}">
+        <input type="submit" value="Освободить от дилера">
+    </form>
+</div>
+
 <div th:if="${cars}">
-    <span> У этого владельца нет машин, назначить машину? </span>
-    <form th:method="PATCH" th:action="@{/park/persons/{id}/choose(id=${person.getId()})}">
-        <label for="carPerson">Выберите машину по уникальному номеру: </label>
-        <select th:object="${car}" th:field="*{id}" id="carPerson">
+    <div th:if="${cars.isEmpty()}">
+        <b>Машин нет, создайте хотя бы одну</b>
+    </div>
+    <div th:if="${!cars.isEmpty()}">
+        <span> У этого владельца нет машин, назначить машину? </span>
+        <form th:method="PATCH" th:action="@{/persons/{id}/choose(id=${person.getId()})}">
+            <label for="car">Выберите машину по уникальному номеру: </label>
+            <select th:object="${car}" th:field="*{id}" id="car">
+                <option th:each="car : ${cars}" th:value="${car.getId()}" th:text="${car.getUniqueNumber()}">
+                </option>
+            </select>
+            <input type="submit" value="Назначить машину">
+        </form>
+        <hr/>
+    </div>
+</div>
+<div th:if="${carsOwner}">
+    <hr/>
+    <b>Машины человека:</b>
+    <br/>
+    <div th:each="car : ${carsOwner}">
+        <a th:href="@{/cars/{id}(id=${car.getId()})}"
+           th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}"
+        >car</a>
+    </div>
+    <form th:method="PATCH" th:action="@{/persons/{id}/choose(id=${person.getId()})}">
+        <label for="news">Выберите машину по уникальному номеру: </label>
+        <select th:object="${car}" th:field="*{id}" id="news">
             <option th:each="car : ${cars}" th:value="${car.getId()}" th:text="${car.getUniqueNumber()}">
             </option>
         </select>
@@ -21,31 +52,15 @@
     </form>
     <hr/>
 </div>
-<div th:if="${carsOwner}">
-    <hr/>
-    <b>Машины человека:</b>
-    <br/>
-    <table th:each="car : ${cars}">
-        <tr>
-            <td>
-                <span th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}"
-                      >
-                    car
-                </span>
-            </td>
-        </tr>
-    </table>
-    <hr/>
-</div>
 
 
-<form th:method="GET" th:action="@{/park/persons/{id}/edit(id=${person.getId()})}">
+<form th:method="GET" th:action="@{/persons/{id}/edit(id=${person.getId()})}">
     <input type="submit" value="Редактировать поля владельца"/>
 </form>
-<form th:method="DELETE" th:action="@{/park/persons/{id}(id=${person.getId()})}">
+<form th:method="DELETE" th:action="@{/persons/{id}(id=${person.getId()})}">
     <input type="submit" value="Удалить владельца"/>
 </form>
-<form th:method="GET" th:action="@{/park/persons}">
+<form th:method="GET" th:action="@{/persons}">
     <input type="submit" value="Вернуться к списку владельцев машин"/>
 </form>
 

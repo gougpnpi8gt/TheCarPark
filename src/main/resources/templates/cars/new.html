@@ -6,10 +6,14 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/park/cars}" th:object="${car}">
-    <label for="dateCreation">Введите дату сборки: </label>
+<form th:method="POST" th:action="@{/cars}" th:object="${car}">
+    <label for="dateCreation">Введите дату сборки yyyy-mm-dd: </label>
     <input type="text" th:field="*{dateCreation}" id="dateCreation"/>
     <div style="color:red" th:if="${#fields.hasErrors('dateCreation')}" th:errors="*{dateCreation}">Date creation Error</div>
+    <br/>
+    <label for="uniqueNumber">Введите уникальный номер: </label>
+    <input type="text" th:field="*{uniqueNumber}" id="uniqueNumber"/>
+    <div style="color:red" th:if="${#fields.hasErrors('uniqueNumber')}" th:errors="*{uniqueNumber}">Unique number Error</div>
     <br/>
     <input type="submit" value="Создать машину!"/>
 </form>

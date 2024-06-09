@@ -2,12 +2,15 @@ package com.work.thecarpark.entity.cars;
 
 import com.work.thecarpark.entity.persons.Person;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -24,10 +27,13 @@ public class Car {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Cascade(value = org.hibernate.annotations.CascadeType.REFRESH)
     Integer id;
 
     @Column(name = "unique_number", unique = true)
-    UUID uniqueNumber;
+    @NotEmpty(message = "Уникальный номер должен быть назначен")
+    @Size(min = 2, max = 100, message = "Поле должно быть от 2 до 20 символов длиной")
+    String uniqueNumber;
 
     @Column(name = "date_creation")
     @Temporal(TemporalType.DATE)
@@ -39,10 +45,4 @@ public class Car {
     @JoinColumn(name = "person_id",
             referencedColumnName = "id")
     Person owner;
-    @PrePersist
-    private void generateUniqueNumber() {
-        if (uniqueNumber == null) {
-            uniqueNumber = UUID.fromString(String.valueOf(UUID.randomUUID()));
-        }
-    }
 }

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Dealer {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Cascade(value = org.hibernate.annotations.CascadeType.REFRESH)
     Integer id;
 
     @Column(name = "title")
@@ -38,7 +40,7 @@ public class Dealer {
     @OneToMany(mappedBy = "dealer")
     List<Person> persons;
 
-    private void addPerson(Person person){
+    public void addPerson(Person person){
         if (persons == null){
             persons = new ArrayList<>();
         }
