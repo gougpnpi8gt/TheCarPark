@@ -28,9 +28,11 @@ public class UploadController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             double distance = serviceGps.processFile(file);
-            return ResponseEntity.ok("Пройденное расстояние: " + distance + " км");
+            return ResponseEntity.ok(STR."Пройденное расстояние: \{distance} км");
+            // Пройденное расстояние: 1790.7310042672532 км
+            // Postman - body{key - File, value - file.log}
         } catch (IOException e) {
-            return ResponseEntity.status(500).body("Ошибка при обработке файла: " + e.getMessage());
+            return ResponseEntity.status(500).body(STR."Ошибка при обработке файла: \{e.getMessage()}");
         }
     }
 }

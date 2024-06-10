@@ -37,7 +37,7 @@ public class Dealer {
     @Column(name = "email")
     String email;
 
-    @OneToMany(mappedBy = "dealer")
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     List<Person> persons;
 
     public void addPerson(Person person){
@@ -45,5 +45,6 @@ public class Dealer {
             persons = new ArrayList<>();
         }
         persons.add(person);
+        //person.setDealer(this);
     }
 }

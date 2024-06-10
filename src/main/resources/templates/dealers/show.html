@@ -5,11 +5,12 @@
     <title>Страница дилера</title>
 </head>
 <body>
-
-<p th:text="${dealer.getTitle()}">VALUE</p>
-<p th:text="${dealer.getFullNameRepresentative()}">VALUE</p>
-<p th:text="${dealer.getEmail()}">VALUE</p>
-
+<span>Название организации: </span> <span th:text="${dealer.getTitle()}">Dealer name</span>
+<br/>
+<span>ФИО представителя: </span> <span th:text="${dealer.getFullNameRepresentative()}">FullName</span>
+<br/>
+<span>Электронная почта: </span> <span th:text="${dealer.getEmail()}">Email</span>
+<br/>
 <div th:if="${people}">
     <span> У этого дилера нет владельцев машин, добавить? </span>
     <form th:method="PATCH" th:action="@{/dealers/{id}/choose(id=${dealer.getId()})}">
@@ -33,8 +34,6 @@
         >person</a>
     </div>
 </div>
-
-<hr/>
 <form th:method="GET" th:action="@{/dealers/{id}/edit(id=${dealer.getId()})}">
     <input type="submit" value="Редактировать поля дилера"/>
 </form>

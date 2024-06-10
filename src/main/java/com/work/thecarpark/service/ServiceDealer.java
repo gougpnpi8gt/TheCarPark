@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,10 +54,13 @@ public class ServiceDealer {
         dealersRepository.save(dealer);
     }
     @Transactional
+    public Dealer findDealerByIdWithPersons(int id) {
+        return dealersRepository.findByIdWithPersons(id);
+    }
+    @Transactional
     public void appointPerson(int dealerId, Person person) {
         Dealer dealer = findDealerById(dealerId);
         dealer.addPerson(person);
-        person.setDealer(dealer);
     }
     @Transactional
     public void deleteDealer(int id) {

@@ -45,8 +45,6 @@ public class ServiceCar {
     public void releaseCar(int id) {
         Car car = findCarById(id);
         car.setOwner(null);
-//        Person person = car.getOwner();
-//        person.deleteCar(car);
     }
 
     @Transactional

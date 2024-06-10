@@ -1,6 +1,7 @@
 package com.work.thecarpark.service;
 
 import com.work.thecarpark.entity.cars.Car;
+import com.work.thecarpark.entity.dilers.Dealer;
 import com.work.thecarpark.entity.persons.Person;
 import com.work.thecarpark.repostitory.CarsRepository;
 import com.work.thecarpark.repostitory.PersonRepository;
@@ -51,14 +52,19 @@ public class ServicePerson {
     @Transactional
     public void appointCar(int personId, Car car) {
         Person person = findPersonById(personId);
-        person.addCar(car);
         car.setOwner(person);
-        //carsRepository.save(car);
+        person.addCar(car);
     }
     @Transactional
     public void release(int id) {
         Person person = findPersonById(id);
         person.setDealer(null);
+    }
+    @Transactional
+    public void appointDealer(int personId, Dealer dealer) {
+        Person person = findPersonById(personId);
+        person.setDealer(dealer);
+        dealer.addPerson(person);
     }
 
     @Transactional

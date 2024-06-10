@@ -1,6 +1,7 @@
 package com.work.thecarpark.service;
 
 import com.work.thecarpark.entity.gps.Gps;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,24 +12,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ServiceGps {
     public double processFile(MultipartFile file) throws IOException {
         List<Gps> gpsList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String line;
             Gps previousData = null;
+            int countLine = 0;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("$GPGGA")) {
-                    Gps currentData = parseGpgga(line);
-                    if (previousData != null && currentData != null) {
-                        gpsList.add(currentData);
+                if (countLine == 193819){
+                    continue;
+                }
+                countLine++;
+                try{
+                    if (line.startsWith("$GPGGA")) {
+                        Gps currentData = parseGpgga(line);
+                        if (previousData != null && currentData != null) {
+                            gpsList.add(currentData);
+                        }
+                        previousData = currentData;
+                    } else if (line.startsWith("$GNVTG")) {
+                        double speed = parseGnvgt(line);
+                        if (speed == 0 && !gpsList.isEmpty()) {
+                            gpsList.removeLast();
+                        }
+                    } else {
+                        //System.out.println("Не верный формат, возможно повторение запятых, пробелов и т.д." + "Строка: " + line);
                     }
-                    previousData = currentData;
-                } else if (line.startsWith("$GNVTG")) {
-                    double speed = parseGnvgt(line);
-                    if (speed == 0 && !gpsList.isEmpty()) {
-                        gpsList.removeLast();
-                    }
+                } catch (Exception e) {
+                    System.out.println(countLine);
+                    throw new RuntimeException(e.getMessage() + e.getCause());
                 }
             }
         }
@@ -64,13 +78,13 @@ public class ServiceGps {
     }
 
     private double haversine(double lat1, double lon1, double lat2, double lon2) {
-        final int R = 6371; // Radius of the earth in km
+        final int R = 6371;
         double latDistance = Math.toRadians(lat2 - lat1);
         double lonDistance = Math.toRadians(lon2 - lon1);
         double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
                 + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c; // convert to kilometers
+        return R * c;
     }
 }

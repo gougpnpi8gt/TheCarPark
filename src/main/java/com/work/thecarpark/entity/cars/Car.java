@@ -18,8 +18,6 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -27,7 +25,6 @@ public class Car {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Cascade(value = org.hibernate.annotations.CascadeType.REFRESH)
     Integer id;
 
     @Column(name = "unique_number", unique = true)
@@ -41,8 +38,16 @@ public class Car {
     @PastOrPresent(message = "Сообщение должно содержать дату сборки в прошлом или настоящем")
     LocalDate dateCreation;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "person_id",
             referencedColumnName = "id")
     Person owner;
+    public Car(){
+
+    }
+
+    public Car(String uniqueNumber, LocalDate dateCreation) {
+        this.uniqueNumber = uniqueNumber;
+        this.dateCreation = dateCreation;
+    }
 }

@@ -50,6 +50,14 @@ public class ControllerDealer {
             model.addAttribute("people", servicePerson.findAllPersons());
         }
         return "dealers/show";
+//        Dealer dealer = serviceDealer.findDealerByIdWithPersons(id);
+//        model.addAttribute("dealer", dealer);
+//        if (dealer != null && !dealer.getPersons().isEmpty()) {
+//            model.addAttribute("persons", dealer.getPersons());
+//        } else {
+//            model.addAttribute("people", servicePerson.findAllPersons());
+//        }
+//        return "dealers/show";
     }
 
     @GetMapping("/new")

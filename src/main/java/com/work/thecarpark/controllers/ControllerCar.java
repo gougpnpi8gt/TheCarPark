@@ -81,12 +81,12 @@ public class ControllerCar {
     public String choosePersonForCar(@ModelAttribute("person") Person person,
                                      @PathVariable("id") int id) {
         serviceCar.appointPerson(id, person);
-        return "redirect:/cars/" + id;
+        return STR."redirect:/cars/\{id}";
     }
 
     @PatchMapping("/{id}/release")
     public String releaseCar(@PathVariable("id") int id) {
         serviceCar.releaseCar(id);
-        return "redirect:/cars/" + id;
+        return STR."redirect:/cars/\{id}";
     }
 }
