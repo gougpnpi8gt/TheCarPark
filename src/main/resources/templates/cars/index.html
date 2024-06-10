@@ -7,14 +7,14 @@
 <body>
 
 <div th:each="car : ${cars}">
-    <a th:href="@{/park/cars/{id}(id=${car.getId()})}"
+    <a th:href="@{/cars/{id}(id=${car.getId()})}"
        th:text="${car.getUniqueNumber() + ', ' + car.getDateCreation()}">car</a>
 </div>
 
 <br/>
 <hr/>
 
-<a href="/park/cars/new">Добавить машину</a>
+<a href="/cars/new">Добавить машину</a>
 <br/>
 <a href="/park">Назад</a>
 </body>

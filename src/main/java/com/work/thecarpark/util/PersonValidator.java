@@ -1,7 +1,7 @@
 package com.work.thecarpark.util;
 
 import com.work.thecarpark.entity.persons.Person;
-import com.work.thecarpark.service.ServicePark;
+import com.work.thecarpark.service.ServicePerson;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,12 @@ import org.springframework.validation.Validator;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PersonValidator implements Validator {
-    final ServicePark servicePark;
+    final ServicePerson servicePerson;
     @Autowired
-    public PersonValidator(ServicePark servicePark) {
-        this.servicePark = servicePark;
+    public PersonValidator(ServicePerson servicePerson) {
+        this.servicePerson = servicePerson;
     }
+
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -26,7 +27,7 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
-        if (servicePark.findByFullName(person.getFullName()).isPresent()){
+        if (servicePerson.findByFullName(person.getFullName()).isPresent()){
             errors.rejectValue("fullName", "", "This fullName is already taken");
         }
     }

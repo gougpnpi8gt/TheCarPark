@@ -40,21 +40,15 @@ public class Person {
     List<Car> cars;
 
     @ManyToOne
-    @JoinColumn(name = "dealer_id",
-            referencedColumnName = "id")
+    @JoinColumn(name = "dealer_id", referencedColumnName = "id")
     Dealer dealer;
 
     public void addCar(Car car) {
-        if (car == null) {
+        if (cars == null) {
             cars = new ArrayList<>();
         }
         cars.add(car);
-    }
-
-    public void deleteCar(Car car) {
-        if (cars != null) {
-            cars.remove(car);
-        }
+        //сar.setOwner(this);
     }
 
     public Person() {

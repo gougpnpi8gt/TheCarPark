@@ -5,20 +5,42 @@
     <title>Страница дилера</title>
 </head>
 <body>
-<p th:text="${dealer.getTitle() + ', ' + dealer.getFullNameRepresentative() + ', '  + dealer.getEmail()}">dealer</p>
-<div th:each="person : ${people}">
-    <a th:href="@{/park/persons/{id}(id=${person.getId()})}"
-       th:text="${person.getFullName() + ', ' + person.getCars()}"
-    >person</a>
+<span>Название организации: </span> <span th:text="${dealer.getTitle()}">Dealer name</span>
+<br/>
+<span>ФИО представителя: </span> <span th:text="${dealer.getFullNameRepresentative()}">FullName</span>
+<br/>
+<span>Электронная почта: </span> <span th:text="${dealer.getEmail()}">Email</span>
+<br/>
+<div th:if="${people}">
+    <span> У этого дилера нет владельцев машин, добавить? </span>
+    <form th:method="PATCH" th:action="@{/dealers/{id}/choose(id=${dealer.getId()})}">
+        <label for="person">Выберите человека по имени: </label>
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+            </option>
+        </select>
+        <input type="submit" value="Назначить владельца">
+    </form>
+    <hr/>
 </div>
-<hr/>
-<form th:method="GET"  th:action="@{/park/dealers/{id}/edit(id=${dealer.getId()})}">
-    <input type="submit" value="Редактировать"/>
+
+<div th:if="${persons}">
+    <hr/>
+    <b>Список владельцев машин у дилера:</b>
+    <br/>
+    <div th:each="person : ${persons}">
+        <a th:href="@{/persons/{id}(id=${person.getId()})}"
+           th:text="${person.getFullName() + ', ' + person.getPhone() + ', ' + person.getEmail()}"
+        >person</a>
+    </div>
+</div>
+<form th:method="GET" th:action="@{/dealers/{id}/edit(id=${dealer.getId()})}">
+    <input type="submit" value="Редактировать поля дилера"/>
 </form>
-<form th:method="DELETE" th:action="@{/park/dealers/{id}(id=${dealer.getId()})}">
-    <input type="submit" value="Удалить"/>
+<form th:method="DELETE" th:action="@{/dealers/{id}(id=${dealer.getId()})}">
+    <input type="submit" value="Удалить дилера"/>
 </form>
-<form th:method="GET" th:action="@{/park/dealers}">
+<form th:method="GET" th:action="@{/dealers}">
     <input type="submit" value="Вернуться в меню"/>
 </form>
 </body>
